@@ -12,7 +12,6 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   bool notificationsEnabled = true;
 
- 
   final user = Supabase.instance.client.auth.currentUser;
 
   @override
@@ -84,11 +83,12 @@ class _SettingsState extends State<Settings> {
             ),
           ),
           const SizedBox(height: 12),
-          Container(
-            decoration: BoxDecoration(
-              color: const Color(0xFF1C1B22),
+          Material(
+            color: const Color(0xFF1C1B22),
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+              side: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
             ),
             child: SwitchListTile(
               value: notificationsEnabled,
@@ -120,11 +120,12 @@ class _SettingsState extends State<Settings> {
             ),
           ),
           const SizedBox(height: 12),
-          Container(
-            decoration: BoxDecoration(
-              color: const Color(0xFF1C1B22),
+          Material(
+            color: const Color(0xFF1C1B22),
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+              side: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
             ),
             child: Column(
               children: [
@@ -149,33 +150,32 @@ class _SettingsState extends State<Settings> {
                   builder: (context) {
                     return AlertDialog(
                       backgroundColor: const Color(0xFF1C1B22),
-                      title: const Text(//الاكبر
+                      title: const Text(
                         'Log Out',
                         style: TextStyle(color: Colors.white),
                       ),
-                      content: const Text(//  الاصغر
+                      content: const Text(
                         'Are you sure you want to log out?',
                         style: TextStyle(color: Colors.white70),
                       ),
-                      actions: [// زر الغاء وزر تسجيل الخروج
-                        TextButton(// زر الغاء
+                      actions: [
+                        TextButton(
                           onPressed: () => Navigator.pop(context),
                           child: const Text(
                             'Cancel',
                             style: TextStyle(color: Colors.white54),
                           ),
                         ),
-                        TextButton(// زر تسجيل الخروج
+                        TextButton(
                           onPressed: () async {
                             await AuthService.signOut();
 
                             if (!context.mounted) return;
-                            
 
                             Navigator.pushNamedAndRemoveUntil(
                               context,
                               '/login',
-                              (route) => false,// إزالة جميع الصفحات السابقة
+                              (route) => false,
                             );
                           },
                           child: const Text(

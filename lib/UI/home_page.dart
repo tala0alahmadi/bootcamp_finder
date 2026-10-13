@@ -277,11 +277,11 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   return Swiper(
-                    key: ValueKey('$selected$query'),
+                    key: ValueKey('$selected$query${items.length}'),
                     itemCount: items.length,
                     viewportFraction: 0.82,
                     scale: 0.9,
-                    loop: items.length > 1,
+                    loop: false,
                     pagination: items.length > 1
                         ? const SwiperPagination(
                             margin: EdgeInsets.only(bottom: 4),
@@ -391,6 +391,8 @@ class _BootcampCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             camp.desc,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 14,
               height: 1.4,

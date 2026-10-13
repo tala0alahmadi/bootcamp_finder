@@ -93,3 +93,5 @@ lib/
 ## Screenshots
 
 ![App Showcase](screenshots/showcase.png)
+
+ [▶ Watch the demo video](screenshots/bootcamp_finder_demo.mp4)

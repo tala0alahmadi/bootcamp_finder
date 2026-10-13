@@ -174,19 +174,41 @@ class BootcampDetailsPage extends StatelessWidget {
           child: ElevatedButton(
     
             onPressed: () async {
-         
-              final uri = Uri.tryParse(camp.url);
+              try {
+                String rawUrl = camp.url.trim();
+                if (rawUrl.isEmpty) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("No URL available for this bootcamp"),
+                      ),
+                    );
+                  }
+                  return;
+                }
 
-              //  لو الرابط سليم نفتحه، ونعرف هل انفتح فعلاً (true/false)
-              final opened =
-                  uri != null &&
-                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                if (!rawUrl.startsWith('http://') &&
+                    !rawUrl.startsWith('https://')) {
+                  rawUrl = 'https://$rawUrl';
+                }
 
-            
-              if (!opened && context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Couldn't open the link")),
-                );
+                final uri = Uri.tryParse(rawUrl);
+                if (uri != null && await canLaunchUrl(uri)) {
+                  await launchUrl(
+                    uri,
+                    mode: LaunchMode.externalApplication,
+                  );
+                } else if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Couldn't open the link")),
+                  );
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Could not open link: $e")),
+                  );
+                }
               }
             },
             style: ElevatedButton.styleFrom(

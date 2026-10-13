@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => BootcampCubit()..loadBootcamps(),
